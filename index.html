@@ -1,0 +1,466 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="description" content="Five UCF engineering students learning how event teams take a show from first plan to final load-out. 20 minutes, one recent event, your perspective.">
+<meta name="theme-color" content="#FDFDFD" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0A0A" media="(prefers-color-scheme: dark)">
+<meta property="og:title" content="UCF Research &middot; Live Event Ops">
+<meta property="og:description" content="Five UCF engineering students learning how event teams take a show from first plan to final load-out. 20 minutes, one recent event, your perspective.">
+<meta property="og:type" content="website">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' rx='5' fill='%230A0A0A'/%3E%3Ctext x='12' y='16.6' text-anchor='middle' font-family='Helvetica,Arial,sans-serif' font-weight='bold' font-size='11' fill='%23FAFAFA'%3E20%3C/text%3E%3C/svg%3E">
+<title>UCF Research &middot; Live Event Ops</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link rel="stylesheet" href="https://api.fontshare.com/v2/css?f[]=satoshi@400,500,700,900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400..700&display=swap">
+
+<style>
+  /* An achromatic system: neutral surfaces, ink text, and an inverted ink
+     button as the one primary action. No hue anywhere. Pure white and pure
+     black are nudged one step in, so the page never sits on either. */
+  :root {
+    color-scheme: light dark;
+    --bg-base:     #FDFDFD;  /* page */
+    --bg-raised:   #FAFAFA;  /* Paper: cards */
+    --bg-high:     #F0F0F0;  /* Soft Gray: muted surfaces */
+    --text-1:      #0A0A0A;  /* Ink */
+    --text-2:      #242424;  /* Dark Gray */
+    --text-3:      #666666;  /* Mid Gray: labels only */
+    --border-subtle: #F0F0F0;
+    --border-medium: #D9D9D9;
+    --border-strong: #666666;
+    --accent-fg:   #0A0A0A;
+    --accent-hover:#242424;
+    --on-accent:   #FAFAFA;
+    --note-bg:     #FFF6DD;
+    --note-fg:     #6B4A00;
+    --note-rule:   #EBCF86;
+
+    --sans: 'Satoshi', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', sans-serif;
+    --num:  'Inter', ui-sans-serif, system-ui, -apple-system, sans-serif;
+    --ease: cubic-bezier(0.16, 1, 0.3, 1);
+    --gutter: clamp(16px, 4vw, 48px);
+    --max:  1160px;
+
+    --t-label: 0.6875rem;
+    --t-small: clamp(0.875rem, 0.1vw + 0.85rem, 0.9375rem);
+    --t-body:  clamp(1rem, 0.25vw + 0.95rem, 1.125rem);
+    --t-title: clamp(2rem, 3.6vw + 0.6rem, 4rem);
+    --t-h2:    clamp(2rem, 2.8vw + 1rem, 3.5rem);
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg-base:     #0A0A0A;
+      --bg-raised:   #121212;
+      --bg-high:     #1C1C1C;
+      --text-1:      #FAFAFA;
+      --text-2:      #C4C4C4;
+      --text-3:      #8A8A8A;
+      --border-subtle: #171717;
+      --border-medium: #242424;
+      --border-strong: #6E6E6E;
+      --accent-fg:   #FAFAFA;
+      --accent-hover:#EDEDED;
+      --on-accent:   #171717;
+      --note-bg:     #2A2410;
+      --note-fg:     #F2E6B0;
+      --note-rule:   #4A4020;
+    }
+  }
+
+  html { -webkit-text-size-adjust: 100%; }
+  * { box-sizing: border-box; }
+  img { max-width: 100%; display: block; }
+  [hidden] { display: none !important; }
+  ::selection { background: var(--text-1); color: var(--bg-base); }
+
+  body {
+    margin: 0;
+    background: var(--bg-base);
+    color: var(--text-1);
+    font-family: var(--sans);
+    font-size: var(--t-body);
+    font-weight: 400;
+    line-height: 1.55;
+    letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+    padding-top: env(safe-area-inset-top, 0px);
+    overflow-x: hidden;
+  }
+  button, input, textarea { font-family: var(--sans); letter-spacing: -0.02em; }
+
+  .wrap { width: 100%; max-width: var(--max); margin-inline: auto; padding-inline: var(--gutter); }
+
+  a { color: inherit; text-decoration-color: var(--border-medium); text-underline-offset: 0.22em; text-decoration-thickness: 1px; }
+  a:hover { text-decoration-color: currentColor; }
+  a:focus-visible, button:focus-visible, summary:focus-visible {
+    outline: 2px solid var(--text-1); outline-offset: 3px; border-radius: 9999px;
+  }
+
+  /* Hierarchy is weight and tracking, not a second family: headings jump to Black. */
+  h1, h2, h3 { margin: 0; font-family: var(--sans); font-weight: 900; letter-spacing: -0.03em; line-height: 1.05; }
+
+  /* Eyebrow labels: the one place tracking opens up. */
+  .label {
+    margin: 0; font-size: var(--t-label); font-weight: 700;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--text-3);
+  }
+  .label .n { color: var(--text-1); font-family: var(--num); font-variant-numeric: tabular-nums; margin-right: 0.7em; }
+
+  /* Primary action is inverted: ink fill, paper text, fully pilled. */
+  .btn {
+    display: inline-flex; align-items: center; justify-content: center; gap: 10px; cursor: pointer;
+    background: var(--accent-fg); color: var(--on-accent); border: 0;
+    font-weight: 500; font-size: clamp(15px, 0.3vw + 14px, 16.5px);
+    padding: 13px clamp(20px, 1vw + 16px, 26px); border-radius: 9999px; text-decoration: none;
+  }
+  .btn:hover { background: var(--accent-hover); }
+  .btn:active { opacity: 0.85; }
+  .btn svg { width: 15px; height: 15px; }
+  .btn svg path { stroke: currentColor; stroke-width: 2; fill: none; stroke-linecap: round; stroke-linejoin: round; }
+
+  /* ---- the title block ---- */
+  .top { text-align: center; padding-block: clamp(40px, 7vh, 88px) 0; }
+  /* The university's mark is the one colour on the page, so it stays small. */
+  .crest { display: block; width: clamp(64px, 5.6vw, 84px); height: auto; margin: 0 auto clamp(18px, 2.6vh, 26px); }
+  @media (prefers-color-scheme: dark) {
+    /* On a dark page the mark's black edge disappears; redraw its light keyline. */
+    .crest { filter: drop-shadow(1px 0 0 var(--text-1)) drop-shadow(-1px 0 0 var(--text-1))
+                     drop-shadow(0 1px 0 var(--text-1)) drop-shadow(0 -1px 0 var(--text-1)); }
+  }
+  .top .label { line-height: 1.7; }
+  .title {
+    margin: clamp(16px, 2.2vh, 24px) auto 0; max-width: 22ch;
+    font-size: var(--t-title); line-height: 0.98; letter-spacing: -0.045em; text-wrap: balance;
+  }
+  .lede {
+    margin: clamp(18px, 2.6vh, 26px) auto 0; max-width: 50ch;
+    font-size: clamp(1.0625rem, 0.6vw + 0.92rem, 1.3125rem); line-height: 1.5;
+    color: var(--text-2); text-wrap: balance;
+  }
+  .top .btn { margin-top: clamp(20px, 3vh, 30px); }
+
+  /* ---- the team: five portraits in a row ---- */
+  .team {
+    list-style: none; margin: clamp(48px, 8vh, 80px) auto 0; padding: 0; max-width: 900px;
+    display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px;
+  }
+  .team li { display: flex; flex-direction: column; align-items: center; min-width: 0; }
+  .avatar {
+    position: relative; width: clamp(54px, 8.6vw, 120px); aspect-ratio: 1; border-radius: 50%; overflow: hidden;
+    background: var(--bg-high); border: 1px solid var(--border-medium);
+    display: grid; place-items: center;
+  }
+  .mono { font-size: clamp(1.25rem, 2.4vw, 2.25rem); font-weight: 900; letter-spacing: -0.03em; color: var(--text-2); line-height: 1; }
+  .photo { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+  .photo[src=""], .photo:not([src]) { display: none; }
+  .p-name { margin: 12px 0 0; font-size: clamp(0.8125rem, 0.3vw + 0.75rem, 1rem); font-weight: 700; color: var(--text-1); }
+  .p-degree { margin: 3px 0 0; font-size: clamp(0.6875rem, 0.25vw + 0.62rem, 0.8125rem); line-height: 1.35; color: var(--text-3); text-align: center; text-wrap: balance; }
+
+  /* ---- what we're studying, then what the conversation looks like ---- */
+  .study {
+    margin-top: clamp(48px, 7vh, 72px); padding-top: clamp(36px, 5vh, 52px);
+    border-top: 1px solid var(--border-medium);
+  }
+  .study-grid { display: grid; gap: 24px clamp(32px, 4vw, 56px); margin: 18px 0 0; }
+  @media (min-width: 900px) { .study-grid { grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr) minmax(0, 1fr); } }
+  .study-grid dt { font-size: var(--t-small); font-weight: 700; color: var(--text-1); }
+  .study-grid dd { margin: 8px 0 0; color: var(--text-2); text-wrap: pretty; }
+  .study-grid dd.lead { font-size: clamp(1.25rem, 0.8vw + 1rem, 1.5rem); font-weight: 500; line-height: 1.35;
+                        letter-spacing: -0.025em; color: var(--text-1); }
+
+  .convo {
+    display: grid; gap: 24px clamp(48px, 7vw, 104px); align-items: start;
+    margin-top: clamp(48px, 7vh, 72px); padding-top: clamp(36px, 5vh, 52px);
+    border-top: 1px solid var(--border-medium);
+  }
+  @media (min-width: 900px) { .convo { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+  .convo h2 { font-size: clamp(1.875rem, 2.4vw + 1rem, 3rem); line-height: 1.02; letter-spacing: -0.035em; text-wrap: balance; }
+  .points { list-style: none; margin: 0; padding: 0; max-width: 60ch; }
+  .points li {
+    display: grid; grid-template-columns: 1.4em minmax(0, 1fr); gap: 0 8px;
+    padding-block: 10px; border-bottom: 1px solid var(--border-medium); color: var(--text-1); text-wrap: pretty;
+  }
+  .points li:first-child { padding-top: 0; }
+  .points li::before { content: "\2014"; color: var(--text-3); }
+  .aside.ask { font-size: clamp(1.0625rem, 0.4vw + 0.98rem, 1.25rem); color: var(--text-2); line-height: 1.45; }
+  .aside {
+    margin-top: 22px; padding-top: 14px; border-top: 1px solid var(--border-medium);
+    font-size: var(--t-small); color: var(--text-3);
+  }
+
+  /* ---- the interest form: what happens next on the left, the form on the right ---- */
+  .book { padding-block: clamp(64px, 10vh, 112px) 0; scroll-margin-top: 8px; }
+  .book-head { text-align: center; }
+  .book-head h2 { font-size: var(--t-h2); line-height: 1; letter-spacing: -0.035em; }
+  .book-why { margin: 14px auto 0; max-width: 54ch; color: var(--text-2); text-wrap: balance; }
+  .if-grid { display: grid; gap: 36px clamp(36px, 6vw, 88px); align-items: start; margin-top: clamp(32px, 5vh, 52px); }
+  @media (min-width: 860px) { .if-grid { grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); } }
+
+  .next { list-style: none; margin: 16px 0 0; padding: 0; counter-reset: step; }
+  .next li {
+    counter-increment: step; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 2px 14px;
+    padding-block: 16px; border-bottom: 1px solid var(--border-medium);
+  }
+  .next li:last-child { border-bottom: 0; }
+  .next li::before {
+    content: counter(step); grid-row: span 2; width: 32px; height: 32px; border-radius: 50%;
+    border: 1px solid var(--border-strong); display: grid; place-items: center;
+    font-family: var(--num); font-variant-numeric: tabular-nums; font-size: 14px; font-weight: 600; letter-spacing: 0;
+  }
+  .next b { font-weight: 700; letter-spacing: -0.02em; align-self: end; }
+  .next span { font-size: var(--t-small); color: var(--text-3); }
+
+  .if-card { background: var(--bg-raised); border: 1px solid var(--border-medium); border-radius: 8px; padding: clamp(18px, 2.4vw, 28px); }
+  .if-form { display: grid; grid-template-columns: 1fr 1fr; gap: 14px 12px; }
+  .if-form label { display: flex; flex-direction: column; gap: 6px; font-size: 0.75rem; font-weight: 500; color: var(--text-2); min-width: 0; }
+  .if-form .wide { grid-column: 1 / -1; }
+  .if-form input, .if-form textarea {
+    width: 100%; font-size: 15.5px; font-weight: 400; color: var(--text-1); caret-color: var(--text-1);
+    background: var(--bg-base); border: 1px solid var(--border-medium); border-radius: 8px; padding: 10px 14px;
+  }
+  .if-form textarea { min-height: 88px; resize: vertical; }
+  .if-form input:hover, .if-form textarea:hover { border-color: var(--border-strong); }
+  .if-form input:focus, .if-form textarea:focus { outline: 2px solid var(--text-1); outline-offset: -1px; border-color: transparent; }
+  .if-form .opt { font-weight: 400; color: var(--text-3); }
+  .if-trap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+  .if-msg { grid-column: 1 / -1; margin: 0; padding: 11px 14px; border-radius: 8px; font-size: 14px;
+            background: var(--note-bg); color: var(--note-fg); border: 1px solid var(--note-rule); }
+  .if-actions {
+    grid-column: 1 / -1; display: flex; justify-content: space-between; align-items: center;
+    gap: 10px 16px; flex-wrap: wrap; margin-top: 4px;
+  }
+  .if-fine { margin: 0; font-size: 13.5px; color: var(--text-3); }
+  .if-actions .btn { margin-left: auto; }
+  .if-actions .btn[disabled] { opacity: .4; cursor: progress; }
+  .if-done { outline: none; }
+  .if-done .big { margin: 0; font-weight: 900; font-size: clamp(1.5rem, 1.4vw + 1rem, 2.125rem); letter-spacing: -0.03em; line-height: 1.1; }
+  .if-done p { color: var(--text-2); margin: 12px 0 0; }
+  @media (max-width: 560px) { .if-form { grid-template-columns: 1fr; } }
+
+  footer {
+    margin-top: clamp(72px, 10vh, 120px);
+    border-top: 1px solid var(--border-medium);
+    padding-block: 22px calc(26px + env(safe-area-inset-bottom, 0px));
+    font-size: var(--t-small); color: var(--text-3);
+  }
+  footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 32px; }
+  footer p { margin: 0; max-width: 62ch; }
+  code {
+    font-family: var(--num); font-size: 0.9em; letter-spacing: 0;
+    background: var(--bg-high); color: var(--text-2);
+    padding: 0.14em 0.5em; border-radius: 9999px; user-select: all;
+  }
+
+  /* Everything is visible at rest. Motion is added only where it is welcome,
+     and only ever moves transform and opacity. */
+  @media (prefers-reduced-motion: no-preference) {
+    html { scroll-behavior: smooth; }
+    @keyframes rise { from { opacity: 0; transform: translateY(14px); } }
+    .top > * { animation: rise 760ms var(--ease) both; }
+    .top > :nth-child(2) { animation-delay: 60ms; }
+    .top > :nth-child(3) { animation-delay: 120ms; }
+    .top > :nth-child(4) { animation-delay: 180ms; }
+    .top > :nth-child(5) { animation-delay: 240ms; }
+    .team li { animation: rise 700ms var(--ease) both; }
+    .team li:nth-child(1) { animation-delay: 260ms; }
+    .team li:nth-child(2) { animation-delay: 320ms; }
+    .team li:nth-child(3) { animation-delay: 380ms; }
+    .team li:nth-child(4) { animation-delay: 440ms; }
+    .team li:nth-child(5) { animation-delay: 500ms; }
+    .btn svg { transition: transform 220ms var(--ease); }
+    .btn:hover svg { transform: translateY(2px); }
+    .if-done { animation: rise 420ms var(--ease) both; }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <header class="wrap top">
+    <img class="crest" src="ucf-logo.webp" width="253" height="200" alt="UCF">
+    <p class="label">UCF&nbsp;&middot; EGN 4641C Engineering Entrepreneurship&nbsp;&middot; Fall&nbsp;2026</p>
+    <h1 class="title">Help us learn how live events really get run, and what would make it easier.</h1>
+    <p class="lede">We&rsquo;re UCF students studying how event teams take a show from first plan to
+      final load-out: who does what, when, and how it all stays on track. 20 minutes, one recent
+      event, your perspective.</p>
+    <a class="btn" href="#interest">Help with our research
+      <svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 3v9M4 8.5l4 4 4-4"/></svg>
+    </a>
+  </header>
+
+  <section class="wrap" aria-label="The team">
+    <!-- Photos are 240px squares in team/. The initial underneath shows if one fails to load. -->
+    <ul class="team">
+      <li><div class="avatar"><span class="mono" aria-hidden="true">J</span><img class="photo" src="team/julian.webp" width="240" height="240" alt="" decoding="async"></div><p class="p-name">Julian</p><p class="p-degree">B.S. Computer Science</p></li>
+      <li><div class="avatar"><span class="mono" aria-hidden="true">M</span><img class="photo" src="team/medha.webp" width="240" height="240" alt="" decoding="async"></div><p class="p-name">Medha</p><p class="p-degree">B.S. Computer Engineering</p></li>
+      <li><div class="avatar"><span class="mono" aria-hidden="true">V</span><img class="photo" src="team/vardhan.webp" width="240" height="240" alt="" decoding="async"></div><p class="p-name">Vardhan</p><p class="p-degree">M.S. Computer Science</p></li>
+      <li><div class="avatar"><span class="mono" aria-hidden="true">B</span><img class="photo" src="team/beenish.webp" width="240" height="240" alt="" decoding="async"></div><p class="p-name">Beenish</p><p class="p-degree">B.S. Computer Science</p></li>
+      <li><div class="avatar"><span class="mono" aria-hidden="true">B</span><img class="photo" src="team/bindhya.webp" width="240" height="240" alt="" decoding="async"></div><p class="p-name">Bindhya</p><p class="p-degree">B.S. Computer Science</p></li>
+    </ul>
+  </section>
+
+  <section class="wrap" aria-labelledby="study-h">
+    <div class="study">
+      <p class="label" id="study-h"><span class="n">01</span>What we&rsquo;re studying</p>
+      <dl class="study-grid">
+        <div><dt>The question</dt>
+          <dd class="lead">Behind every event are dozens of tasks, deadlines, people, and vendors. How do
+            operations teams keep it all moving, and where does it get hard?</dd></div>
+        <div><dt>Why we&rsquo;re asking you</dt>
+          <dd>Our course requires us to learn from practitioners before we propose anything. We&rsquo;re
+            engineers, not event professionals, so we&rsquo;re starting by listening.</dd></div>
+        <div><dt>What we do with it</dt>
+          <dd>We compare how different venues, promoters, and organizations run their events to find
+            patterns. Those patterns shape our semester project.</dd></div>
+      </dl>
+      <!-- TODO: only with the instructor's permission -->
+      <!-- <p>Our course instructor is NAME, Department of ..., University of Central Florida.</p> -->
+    </div>
+
+    <div class="convo">
+      <h2 id="convo-h">What the conversation looks like</h2>
+      <ul class="points">
+        <li>A 20-minute video call with two of us.</li>
+        <li>You walk us through one recent event, from the moment it was booked to the day after.</li>
+        <li>We ask how your team plans and divides the work, how you track progress and handle
+            changes, and what takes more time or effort than it should.</li>
+        <li>We&rsquo;re also curious what you use day to day, whether that&rsquo;s spreadsheets, group
+            texts, email, whiteboards, or software.</li>
+        <li>No prep needed. Just your experience.</li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="book" id="interest" aria-labelledby="interest-h">
+    <div class="wrap">
+      <div class="book-head">
+        <h2 id="interest-h">Willing to talk with us?</h2>
+        <p class="book-why">If you plan, coordinate, or run events, whether as an operations manager,
+           production manager, event coordinator, or someone who wears every hat, one conversation helps
+           us understand the work better than any textbook could.</p>
+      </div>
+      <div class="if-grid">
+        <div>
+          <p class="label">What happens next</p>
+          <ol class="next">
+            <li><b>Leave your details.</b><span>It takes a minute.</span></li>
+            <li><b>We email you to find a time.</b><span>Whatever fits your week.</span></li>
+            <li><b>We talk for 20 minutes.</b><span>On video, about one recent event.</span></li>
+          </ol>
+          <p class="aside ask" data-needs-email hidden>Questions first? Write to us at <a data-mailto></a>.</p>
+        </div>
+        <div class="if-card" id="interest-body" aria-live="polite">
+          <form class="if-form" id="interest-form" novalidate>
+            <label>Your name <input name="name" autocomplete="name" required></label>
+            <label>Email <input name="email" type="email" autocomplete="email" required></label>
+            <label>Organization <input name="org" autocomplete="organization"></label>
+            <label>Your role <input name="role" autocomplete="organization-title"></label>
+            <label class="wide"><span>What&rsquo;s your availability? <span class="opt">(optional)</span></span>
+              <input name="availability" autocomplete="off"></label>
+            <label class="wide"><span>Anything we should know <span class="opt">(optional)</span></span>
+              <textarea name="note"></textarea></label>
+            <label class="if-trap" aria-hidden="true">Website <input name="website" tabindex="-1" autocomplete="off"></label>
+            <p class="if-msg" role="alert" hidden></p>
+            <div class="if-actions">
+              <p class="if-fine">We only use this to schedule the call.</p>
+              <button class="btn" type="submit">Submit</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>Student research for EGN 4641C at the University of Central Florida.
+       Not an official university survey.</p>
+    <p data-team-email hidden>Team inbox: <a data-mailto-code><code></code></a></p>
+  </div>
+</footer>
+
+<script>
+  /* Where the interest form goes. The engine runs in the team's Google account
+     (the engine/ folder in the team repo) and emails each form to the team inbox. */
+  var BOOKING_ENGINE = "https://script.google.com/macros/s/AKfycbyhJKKUqaMl6Dg29ZrdCZdkNlwC5CSbEkxJ8lYnSVzqNYz9tt4XgchQIdrsQpyhR3bebw/exec";
+  var TEAM_EMAIL = "ucf.eventops.research@gmail.com";
+
+  /* The inbox lives only in TEAM_EMAIL above; every link to it is filled in from there. */
+  if (TEAM_EMAIL) {
+    var te = document.querySelector("[data-team-email]");
+    te.querySelector("code").textContent = TEAM_EMAIL;
+    te.querySelector("[data-mailto-code]").href = "mailto:" + TEAM_EMAIL;
+    te.hidden = false;
+    document.querySelectorAll("[data-mailto]").forEach(function (a) {
+      a.href = "mailto:" + TEAM_EMAIL;
+      a.textContent = TEAM_EMAIL;
+      var box = a.closest("[data-needs-email]");
+      if (box) box.hidden = false;
+    });
+  }
+
+  /* ---- the interest form: the engine emails what they send to the team inbox ---- */
+  (function () {
+    var box = document.getElementById("interest-body");
+    var f = document.getElementById("interest-form");
+    var msg = f.querySelector(".if-msg");
+    var btn = f.querySelector("[type=submit]");
+    var label = btn.textContent;
+    /* An outreach link carries ?c=&name=&email=&org= so people we wrote to need not retype. */
+    var q = new URLSearchParams(location.search);
+    var c = q.get("c") || "";
+    ["name", "email", "org"].forEach(function (k) { if (q.get(k)) f.elements[k].value = q.get(k); });
+
+    function say(text, offerMail) {
+      msg.replaceChildren(text);
+      if (offerMail && TEAM_EMAIL) {
+        var a = document.createElement("a");
+        a.href = "mailto:" + TEAM_EMAIL; a.textContent = TEAM_EMAIL;
+        msg.append(" Email us at ", a, " instead.");
+      }
+      msg.hidden = false;
+    }
+    function trouble() { say("We couldn\u2019t send that just now.", true); }
+
+    function done(who) {
+      var big = document.createElement("p");
+      big.className = "big"; big.textContent = "Thanks, " + who.name.split(/\s+/)[0] + ".";
+      var next = document.createElement("p");
+      next.textContent = "We\u2019ll email you at " + who.email + " to find a time for a 20-minute call.";
+      var d = document.createElement("div");
+      d.className = "if-done"; d.setAttribute("tabindex", "-1"); d.append(big, next);
+      box.replaceChildren(d);
+      d.focus({ preventScroll: true });
+    }
+
+    f.addEventListener("submit", function (e) {
+      e.preventDefault();
+      var g = function (k) { return f.elements[k].value.trim(); };
+      var who = { name: g("name"), email: g("email"), org: g("org"), role: g("role"), availability: g("availability"), note: g("note") };
+      if (!who.name) { say("Please add your name."); return f.elements.name.focus(); }
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(who.email)) { say("That email address does not look right."); return f.elements.email.focus(); }
+      if (!BOOKING_ENGINE) return trouble();
+      msg.hidden = true; btn.disabled = true; btn.textContent = "Sending\u2026";
+      fetch(BOOKING_ENGINE, {
+        method: "POST",
+        /* text/plain keeps this a simple request: Apps Script cannot answer a CORS preflight. */
+        headers: { "Content-Type": "text/plain;charset=utf-8" },
+        body: JSON.stringify({ action: "interest", name: who.name, email: who.email, org: who.org,
+                               role: who.role, availability: who.availability, note: who.note, c: c, website: g("website") }),
+      }).then(function (r) { return r.json(); }).then(function (d) {
+        if (d && d.ok) return done(who);
+        /* An engine deployed before the form existed answers "unknown action": our problem, not theirs. */
+        if (!d || !d.error || d.error === "unknown action") trouble(); else say(d.error);
+      }).catch(trouble).then(function () { btn.disabled = false; btn.textContent = label; });
+    });
+  })();
+</script>
+
+</body>
+</html>

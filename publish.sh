@@ -37,4 +37,4 @@ else
   git commit -q -m "${1:-Update the landing page}"
 fi
 git push -q origin main
-echo "published: https://ucf-eventops-research.github.io/landing-page/"
+echo "published: https://ucf-eventops-research.github.io/"
